@@ -1,0 +1,12 @@
+{
+  "name": "smsapp",
+  "displayName": "smsapp",
+  "expo": {
+    "name": "smsapp",
+    "slug": "smsapp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
