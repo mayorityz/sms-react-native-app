@@ -19,6 +19,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./components/navigations/Home";
 import LoadWallett from "./components/navigations/wallet/LoadWallet";
 import AirtimeMany from "./components/navigations/airtime.jsx/AirtimeMany";
+import Login from "./components/screens/Login";
+import Register from "./components/screens/Register";
 
 function DetailsScreen() {
   return (
@@ -35,10 +37,23 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="register"
+          component={Register}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            // title: "<AntDesign name='home' size={24} color='black' /> Homeie",
             title: "Welcome",
           }}
         />

@@ -14,6 +14,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/users", require("./Routes/Users.routes"));
+
 app.use("/", (req, res, next) => {
   res.send("home page");
 });
