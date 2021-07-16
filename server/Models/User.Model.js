@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  wallet: { type: Number, defaultValue: 0 },
   friends: Array,
 });
 

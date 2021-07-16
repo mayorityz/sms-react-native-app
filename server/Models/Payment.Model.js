@@ -1,14 +1,14 @@
-import { mongoose as DB } from "mongoose";
+const DB = require("mongoose");
 
 const paymentSchema = new DB.Schema({
-  firstname: String,
-  phonenumber: {
-    defaultValue: String,
-    unique: true,
-  },
+  username: String,
   email: String,
-  password: String,
-  friends: Array,
+  amountPaid: Number,
+  datePaid: {
+    type: Date,
+    default: Date.now(),
+  },
+  userid: String,
 });
 
 const Payments = DB.model("payment", paymentSchema);

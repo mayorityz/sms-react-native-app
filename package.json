@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.5",
+    "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-clipboard/clipboard": "^1.8.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-picker/picker": "^1.15.0",
     "@react-navigation/native": "^5.9.4",
@@ -26,11 +28,14 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-paystack": "^3.4.0",
+    "react-native-paystack-webview": "^3.2.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "11.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

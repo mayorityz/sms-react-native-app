@@ -56,7 +56,7 @@ const Register = ({ navigation }) => {
         <View>
           <Text style={Style.label}>Phone Number * :</Text>
           <TextInput
-            placeholder="<+2348051985616>"
+            placeholder="<08051985616>"
             keyboardType="numeric"
             onChangeText={(text) => setPhone(text)}
             value={phone}

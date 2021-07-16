@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "./../API";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Text,
@@ -22,7 +23,19 @@ const Login = ({ navigation }) => {
       });
     } else {
       const response = await login({ phone, password });
-      setAlert({ status: true, message: response.message });
+
+      if (response.success === true) {
+        setAlert({ status: true, message: "Logged Successfully ..." });
+        await AsyncStorage.setItem("isLoggedIn", "true");
+        await AsyncStorage.setItem(
+          "userdetails",
+          JSON.stringify(response.message)
+        );
+        await AsyncStorage.setItem("wallet", response.message.wallet || 0);
+        navigation.navigate("Home");
+      } else {
+        setAlert({ status: true, message: response.message });
+      }
     }
   };
 
@@ -33,7 +46,7 @@ const Login = ({ navigation }) => {
         <View>
           <Text style={Style.label}>Phone Number * :</Text>
           <TextInput
-            placeholder="<+2348051985616>"
+            placeholder="<08051985616>"
             style={Style.inputText}
             onChangeText={(text) => setPhone(text)}
             value={phone}

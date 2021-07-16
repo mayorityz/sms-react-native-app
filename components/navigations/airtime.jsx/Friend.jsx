@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { mask } from "../../logic/Index";
 
-const Friend = ({ friend }) => {
+const Friend = ({ friend, addRemove }) => {
   const [selected, setSelected] = useState("");
 
-  const select = () => {
+  const select = (mobile) => {
     selected === "" ? setSelected("red") : setSelected("");
+    addRemove(mobile);
   };
 
   return (
@@ -19,14 +21,14 @@ const Friend = ({ friend }) => {
           paddingHorizontal: 10,
           color: selected ? "#fff" : "#000",
         }}
-        onPress={select}
+        onPress={() => select(friend.phone)}
       >
         {selected ? (
           <Entypo name="squared-cross" size={12} color="white" />
         ) : (
           <Entypo name="squared-plus" size={12} color="black" />
         )}{" "}
-        {friend.name} - - {friend.phone}
+        {friend.name} - - {mask(friend.phone)}
       </Text>
     </View>
   );

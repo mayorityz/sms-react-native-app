@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   ScrollView,
   Dimensions,
   Image,
+  ActivityIndicator,
 } from "react-native";
 
 import gift from "./components/images/gift1.png";
@@ -21,6 +23,7 @@ import LoadWallett from "./components/navigations/wallet/LoadWallet";
 import AirtimeMany from "./components/navigations/airtime.jsx/AirtimeMany";
 import Login from "./components/screens/Login";
 import Register from "./components/screens/Register";
+import Pay from "./components/screens/Paystack";
 
 function DetailsScreen() {
   return (
@@ -33,28 +36,54 @@ function DetailsScreen() {
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [isLoggedin, setLoggedStatus] = useState(null);
+
+  useEffect(() => {
+    getData();
+  }, [isLoggedin]);
+
+  // if (!isLoggedin) {
+  //   return <ActivityIndicator size="small" color="#00f0ff" />;
+  // }
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("isLoggedIn");
+      if (value !== null) {
+        setLoggedStatus(true);
+      } else setLoggedStatus(false);
+    } catch (e) {
+      console.log("app : error :", e.message);
+    }
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="register"
-          component={Register}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="login"
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
+        {!isLoggedin && (
+          <>
+            <Stack.Screen
+              name="register"
+              component={Register}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </>
+        )}
+
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            title: "Welcome",
+            headerShown: false,
           }}
         />
         <Stack.Screen name="Details" component={DetailsScreen} />
@@ -70,6 +99,14 @@ export default function App() {
           component={AirtimeMany}
           options={{
             title: "Share Air Time",
+          }}
+        />
+
+        <Stack.Screen
+          name="paystack"
+          component={Pay}
+          options={{
+            title: "Load Wallet",
           }}
         />
       </Stack.Navigator>

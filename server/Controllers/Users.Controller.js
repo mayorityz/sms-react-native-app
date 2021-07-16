@@ -52,9 +52,7 @@ exports.login = (req, res) => {
             .status(201)
             .json({ success: false, message: "Invalid Credentials" });
         } else {
-          return res
-            .status(201)
-            .json({ success: true, message: "login successful." });
+          return res.status(201).json({ success: true, message: data });
         }
       }
     });
