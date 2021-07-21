@@ -60,3 +60,32 @@ exports.login = (req, res) => {
     return res.status(201).json({ success: false, message: error.message });
   }
 };
+
+exports.addFriends = async (req, res) => {
+  const { firstName, lastName, phone, giver } = req.body;
+  // update the giver
+
+  await ControllerModel.updateOne(
+    { $and: [{ phone: giver }, { "friends.phone": { $ne: phone } }] },
+    { $push: { friends: { firstName, lastName, phone } } },
+    (err, response) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ status: "failed" });
+      } else {
+        if (!response.nModified) {
+          res.status(201).json({
+            status: "success",
+            message:
+              "Phone Number Already Exist As A Friend or Gifter Doesn't Exist!",
+          });
+          return;
+        }
+        res.status(201).json({
+          status: "success",
+          message: "Your Phone Was Added Successfully!",
+        });
+      }
+    }
+  );
+};

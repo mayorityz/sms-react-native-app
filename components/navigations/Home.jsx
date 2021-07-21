@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Clipboard,
+} from "react-native";
 import {
   AntDesign,
   Feather,
@@ -11,6 +17,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen({ navigation }) {
   const [userDetails, setDetails] = useState([]);
+  const [copied, setCopied] = useState("Tap To Copy And Share Link");
+
   useEffect(() => {
     (async () => {
       const details = await AsyncStorage.getItem("userdetails");
@@ -19,14 +27,25 @@ function HomeScreen({ navigation }) {
     })();
   }, []);
 
+  const copyToClipboard = () => {
+    try {
+      Clipboard.setString(`https://www.gengonly.surge.sh/${userDetails.phone}`);
+      setCopied("Copied!");
+      setTimeout(() => {
+        setCopied("Tap To Copy And Share Link");
+      }, 5000);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>https://www.gengonly.surge.sh/{userDetails.phone}</Text>
-        <TouchableOpacity style={navBox.clipboard}>
+        <TouchableOpacity style={navBox.clipboard} onPress={copyToClipboard}>
           <Text style={{ textAlign: "center" }}>
-            <Feather name="copy" size={14} color="black" /> Tap To Copy And
-            Share Link
+            <Feather name="copy" size={14} color="black" /> {copied}
           </Text>
         </TouchableOpacity>
         <View style={navBox.centering}>

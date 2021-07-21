@@ -226,7 +226,14 @@ const AirtimeMany = () => {
             onChangeText={(text) => setAmount(text)}
             value={amount}
           />
-          <Text style={{ textAlign: "center" }}>Tap A Friend To Add</Text>
+          {userData.friends && userData.friends.length === 0 ? (
+            <Text style={{ textAlign: "center" }}>
+              You have No Friend On Your List!
+            </Text>
+          ) : (
+            <Text style={{ textAlign: "center" }}>Tap A Friend To Add</Text>
+          )}
+
           <ScrollView
             persistentScrollbar={true}
             // contentContainerStyle={{
@@ -235,13 +242,14 @@ const AirtimeMany = () => {
             //   marginVertical: 10,
             // }}
           >
-            {dummyFriends.map((friend, id) => (
-              <Friend
-                key={id + 1}
-                friend={friend}
-                addRemove={addRemoveFriends}
-              />
-            ))}
+            {userData.friends &&
+              userData.friends.map((friend, id) => (
+                <Friend
+                  key={id + 1}
+                  friend={friend}
+                  addRemove={addRemoveFriends}
+                />
+              ))}
           </ScrollView>
 
           {notification !== "" ? (

@@ -1,12 +1,25 @@
 {
-  "name": "smsapp",
-  "displayName": "smsapp",
+  "name": "gengonly",
+  "displayName": "geng only",
   "expo": {
-    "name": "smsapp",
-    "slug": "smsapp",
+    "name": "geng only",
+    "slug": "geng-only",
+    "icon": "./assets/icon.png",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.ma"
+    },
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#f6f8f8"
+    }
   }
 }

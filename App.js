@@ -25,26 +25,24 @@ import Login from "./components/screens/Login";
 import Register from "./components/screens/Register";
 import Pay from "./components/screens/Paystack";
 
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
 const Stack = createStackNavigator();
 
 export default function App() {
   const [isLoggedin, setLoggedStatus] = useState(null);
+  const [appLoading, setLoading] = useState(true);
 
   useEffect(() => {
     getData();
+    // setLoading(false);
+    // aysnc(() => {
+    //   let vvalue = await AsyncStorage.getItem("isLoggedIn");
+    //   if (vvalue !== null) {
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //   }
+    // })();
   }, [isLoggedin]);
-
-  // if (!isLoggedin) {
-  //   return <ActivityIndicator size="small" color="#00f0ff" />;
-  // }
 
   const getData = async () => {
     try {
@@ -86,7 +84,6 @@ export default function App() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen
           name="LoadWallet"
           component={LoadWallett}

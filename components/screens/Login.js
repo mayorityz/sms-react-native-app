@@ -22,19 +22,23 @@ const Login = ({ navigation }) => {
         message: "Please Fill All Fields To Proceed!!!.",
       });
     } else {
-      const response = await login({ phone, password });
+      try {
+        const response = await login({ phone, password });
 
-      if (response.success === true) {
-        setAlert({ status: true, message: "Logged Successfully ..." });
-        await AsyncStorage.setItem("isLoggedIn", "true");
-        await AsyncStorage.setItem(
-          "userdetails",
-          JSON.stringify(response.message)
-        );
-        await AsyncStorage.setItem("wallet", response.message.wallet || 0);
-        navigation.navigate("Home");
-      } else {
-        setAlert({ status: true, message: response.message });
+        if (response.success === true) {
+          setAlert({ status: true, message: "Logged Successfully ..." });
+          await AsyncStorage.setItem("isLoggedIn", "true");
+          await AsyncStorage.setItem(
+            "userdetails",
+            JSON.stringify(response.message)
+          );
+
+          navigation.navigate("Home");
+        } else {
+          setAlert({ status: true, message: response.message });
+        }
+      } catch (error) {
+        console.log(error.message);
       }
     }
   };

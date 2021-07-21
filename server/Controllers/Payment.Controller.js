@@ -1,8 +1,8 @@
 const PaymentModel = require("./../Models/Payment.Model");
+const UserModel = require("./../Models/User.Model");
 
 exports.logPayment = (req, res) => {
   const { username, email, amountPaid, userid } = req.body;
-  console.log(req.body);
   try {
     const save = new PaymentModel({ username, email, amountPaid, userid });
     save.save((error, response) => {
@@ -12,10 +12,23 @@ exports.logPayment = (req, res) => {
           message: error.message,
         });
       } else {
-        res.status(201).json({
-          status: true,
-          message: "successful",
-        });
+        UserModel.updateOne(
+          { _id: userid },
+          { $inc: { wallet: parseInt(amountPaid) } },
+          (err, state) => {
+            if (err) {
+              res.status(400).json({
+                status: false,
+                message: "Error Occured",
+              });
+            } else {
+              res.status(201).json({
+                status: true,
+                message: "successful",
+              });
+            }
+          }
+        );
       }
     });
   } catch (error) {

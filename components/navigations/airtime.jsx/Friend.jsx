@@ -28,7 +28,7 @@ const Friend = ({ friend, addRemove }) => {
         ) : (
           <Entypo name="squared-plus" size={12} color="black" />
         )}{" "}
-        {friend.name} - - {mask(friend.phone)}
+        {friend.firstName} {friend.lastName} - - {mask(friend.phone)}
       </Text>
     </View>
   );
