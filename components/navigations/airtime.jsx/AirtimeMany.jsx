@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, EvilIcons } from "@expo/vector-icons";
 import {
   Text,
   TextInput,
@@ -40,7 +40,6 @@ let dummyFriends = [
 ];
 
 const AirtimeMany = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [amount, setAmount] = useState("");
   const [notification, setNotification] = useState("");
@@ -52,7 +51,7 @@ const AirtimeMany = () => {
       const details = await AsyncStorage.getItem("userdetails");
       setUserData(JSON.parse(details));
     })();
-  }, []);
+  }, [userData]);
 
   const addRemoveFriends = (number) => {
     const copyFriends = [...selectedFriends];
@@ -94,9 +93,17 @@ const AirtimeMany = () => {
       };
 
       await sendAirtimeToOne(data);
+
+      let copyOfUserData = { ...userData };
+      copyOfUserData.wallet -= 4;
+      setUserData(copyOfUserData);
+      await AsyncStorage.setItem("userdetails", JSON.stringify(copyOfUserData));
+
       setNotification(`${i} of ${selectedFriends.length} sent!`);
     }
     setNotification("Transfer Completed!!!");
+
+    setTimeout(() => setNotification(""), 5000);
   };
 
   const [singleNotification, setSingleNotification] = useState(null);
@@ -123,14 +130,21 @@ const AirtimeMany = () => {
         mobile: phone,
         ntw: singleNtw,
       };
-      console.log(data);
+
       const anser = await sendAirtimeToOne(data);
-      console.log(anser.status);
       switch (anser.status) {
         case "INVALID_RECIPIENT":
           setSingleNotification("An invalid mobile phone number was entered");
           break;
         case "ORDER_RECEIVED":
+          // remove N4.
+          let copyOfUserData = { ...userData };
+          copyOfUserData.wallet -= 4;
+          setUserData(copyOfUserData);
+          await AsyncStorage.setItem(
+            "userdetails",
+            JSON.stringify(copyOfUserData)
+          );
           setSingleNotification("Transfer Successful!!!");
           break;
         case "INVALID_ AMOUNT":
@@ -147,6 +161,12 @@ const AirtimeMany = () => {
           break;
       }
     }
+
+    setTimeout(() => setSingleNotification(null), 5000);
+  };
+
+  const UpdateFriendsList = () => {
+    const id = userData._id;
   };
 
   return (
@@ -205,7 +225,17 @@ const AirtimeMany = () => {
               </Picker>
             </View>
             {singleNotification ? (
-              <Text style={{ textAlign: "center" }}>{singleNotification}</Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  backgroundColor: "red",
+                  color: "#fff",
+                  height: 20,
+                  marginVertical: 10,
+                }}
+              >
+                {singleNotification}
+              </Text>
             ) : null}
             <TouchableOpacity style={style.customBtn} onPress={sendSingle}>
               <Text style={{ color: "#fff" }}>SEND CREDIT</Text>
@@ -216,8 +246,14 @@ const AirtimeMany = () => {
         <View style={style.container}>
           <Text style={style.h1Left}>
             <AntDesign name="contacts" size={24} color="black" /> Send To
+            Friends' List.{" "}
+          </Text>
+
+          <Text onPress={UpdateFriendsList}>
+            <EvilIcons name="refresh" size={19} color="red" /> Tap To Refresh
             Friends' List.
           </Text>
+
           <TextInput
             placeholder="Enter Amount To Share."
             keyboardType="numeric"
@@ -252,8 +288,19 @@ const AirtimeMany = () => {
               ))}
           </ScrollView>
 
-          {notification !== "" ? (
-            <Text style={{ textAlign: "center" }}>{notification}</Text>
+          {notification ? (
+            <Text
+              style={{
+                textAlign: "center",
+                backgroundColor: "red",
+                color: "#fff",
+                height: 30,
+                marginVertical: 10,
+                paddingVertical: 5,
+              }}
+            >
+              {notification}
+            </Text>
           ) : null}
           <TouchableOpacity style={style.customBtn} onPress={sendToMany}>
             <Text style={{ color: "#fff" }}>SHARE TO SELECTED</Text>
@@ -270,6 +317,7 @@ const style = StyleSheet.create({
     backgroundColor: "#fff",
     marginTop: 40,
     margin: 10,
+    elevation: 2,
   },
   h1: {
     textAlign: "center",
@@ -305,8 +353,8 @@ const style = StyleSheet.create({
   },
 
   customBtn: {
-    backgroundColor: "#731963",
-    height: 70,
+    backgroundColor: "#070808",
+    height: 50,
     borderRadius: 5,
     display: "flex",
     justifyContent: "center",

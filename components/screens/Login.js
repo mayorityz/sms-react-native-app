@@ -7,7 +7,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
+import logo from "./../../assets/icon.png";
 
 const Login = ({ navigation }) => {
   const [alert, setAlert] = useState({ status: false, message: "" });
@@ -42,6 +44,77 @@ const Login = ({ navigation }) => {
       }
     }
   };
+
+  return (
+    <View style={myStyle.layout}>
+      <View style={{ width: "70%", marginTop: 40 }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 40,
+          }}
+        >
+          <Image source={logo} style={myStyle.logo} />
+          <Text style={{ fontWeight: "bold" }}>Only Geng.</Text>
+        </View>
+        <Text
+          style={[
+            Style.label,
+            {
+              fontSize: 24,
+              marginBottom: 10,
+              textAlign: "center",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          Login
+        </Text>
+        <View>
+          <Text style={Style.label}>Phone Number * :</Text>
+          <TextInput
+            placeholder="<08051985616>"
+            style={Style.inputText}
+            onChangeText={(text) => setPhone(text)}
+            value={phone}
+            keyboardType="numeric"
+          />
+        </View>
+        <View>
+          <Text style={Style.label}>Password * :</Text>
+          <TextInput
+            placeholder="Enter  Your Password"
+            style={Style.inputText}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={true}
+          />
+        </View>
+        {alert.status && (
+          <Text
+            style={{
+              backgroundColor: "red",
+              textAlign: "center",
+              marginBottom: 20,
+            }}
+          >
+            {alert.message}
+          </Text>
+        )}
+        <TouchableOpacity style={Style.button} onPress={loginUser}>
+          <Text style={{ color: "#fff" }}>LOGIN</Text>
+        </TouchableOpacity>
+
+        <Text
+          style={{ textAlign: "center", marginTop: 10 }}
+          onPress={() => navigation.navigate("register")}
+        >
+          CREATE AN ACCOUNT
+        </Text>
+      </View>
+    </View>
+  );
 
   return (
     <View style={Style.layout}>
@@ -82,6 +155,17 @@ const Login = ({ navigation }) => {
     </View>
   );
 };
+
+const myStyle = StyleSheet.create({
+  layout: {
+    marginTop: 25,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: { width: 80, height: 80, borderRadius: 50 },
+  form: {},
+});
 
 const Style = StyleSheet.create({
   layout: {

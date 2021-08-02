@@ -79,7 +79,7 @@ const LoadWallett = ({ navigation }) => {
       <View style={style.formView}>
         <View>
           <Text style={{ fontSize: 20, textAlign: "center" }}>
-            Buy More Units.
+            Buy More Credit Units.
           </Text>
           <TextInput
             placeholder="Enter Amount ..."
@@ -89,13 +89,13 @@ const LoadWallett = ({ navigation }) => {
             value={amount}
             onChangeText={setAmount}
             style={{
-              height: 50,
-              padding: 10,
-              borderColor: "#731963",
+              height: 40,
+              padding: 5,
+              borderColor: "#070808",
               borderWidth: 1,
               width: "100%",
-              marginVertical: 20,
-              fontSize: 30,
+              marginVertical: 10,
+              fontSize: 20,
             }}
           />
           <TouchableOpacity
@@ -160,8 +160,8 @@ const style = StyleSheet.create({
     padding: 20,
   },
   customBtn: {
-    backgroundColor: "#731963",
-    height: 70,
+    backgroundColor: "#070808",
+    height: 50,
     borderRadius: 5,
     display: "flex",
     justifyContent: "center",
@@ -170,9 +170,7 @@ const style = StyleSheet.create({
   banner: {
     height: 250,
     width: "100%",
-    backgroundColor: "#731963",
-    borderBottomRightRadius: 100,
-    borderTopLeftRadius: 50,
+    backgroundColor: "#070808",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

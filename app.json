@@ -1,9 +1,9 @@
 {
-  "name": "gengonly",
-  "displayName": "geng only",
+  "name": "OnlyGeng",
+  "displayName": "Only Geng",
   "expo": {
-    "name": "geng only",
-    "slug": "geng-only",
+    "name": "Only Geng",
+    "slug": "only-geng",
     "icon": "./assets/icon.png",
     "version": "1.0.0",
     "assetBundlePatterns": [

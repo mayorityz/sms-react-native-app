@@ -25,7 +25,7 @@ function HomeScreen({ navigation }) {
       const json = JSON.parse(details);
       setDetails(json);
     })();
-  }, []);
+  }, [userDetails]);
 
   const copyToClipboard = () => {
     try {
@@ -42,7 +42,18 @@ function HomeScreen({ navigation }) {
   return (
     <>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>https://www.gengonly.surge.sh/{userDetails.phone}</Text>
+        {/* <Text>https://www.gengonly.surge.sh/{userDetails.phone}</Text> */}
+        {userDetails.wallet < 1 ? (
+          <Text style={{ textAlign: "center" }}>
+            You Have Insufficient Balance.
+          </Text>
+        ) : (
+          <Text
+            style={{ textAlign: "center", fontSize: 23, fontWeight: "bold" }}
+          >
+            Wallet Balance : N{userDetails.wallet}
+          </Text>
+        )}
         <TouchableOpacity style={navBox.clipboard} onPress={copyToClipboard}>
           <Text style={{ textAlign: "center" }}>
             <Feather name="copy" size={14} color="black" /> {copied}
@@ -66,6 +77,9 @@ function HomeScreen({ navigation }) {
           <View style={{ ...navBox.boxes, ...navBox.box2 }}>
             <Feather name="users" size={24} color="black" />
             <Text>Friends' List</Text>
+            <Text>
+              {userDetails.friends ? userDetails.friends.length : "loading"}
+            </Text>
           </View>
           <View style={{ ...navBox.boxes, ...navBox.box1 }}>
             <MaterialCommunityIcons

@@ -57,3 +57,14 @@ export const sendAirtimeToOne = async ({ amt, mobile, ntw }) => {
     return { error: error.message };
   }
 };
+
+// deduct from wallet.
+export const balaceAdjustment = async ({ amount, userid }) => {
+  const balanceAdjApi = "";
+  try {
+    const { data } = await axios.post(balanceAdjApi, { amount, userid });
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};

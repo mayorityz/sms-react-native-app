@@ -5,8 +5,10 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { newRecord } from "../API";
+import logo from "./../../assets/icon.png";
 
 const Register = ({ navigation }) => {
   const [alert, setAlert] = useState({ status: false, message: "" });
@@ -25,8 +27,110 @@ const Register = ({ navigation }) => {
     } else {
       const saveRecord = await newRecord({ username, email, phone, password });
       setAlert({ status: true, message: saveRecord.message });
+      navigation.navigate("Login");
     }
+
+    setTimeout(() => {
+      setAlert({ status: false, message: "" });
+    }, 4000);
   };
+
+  return (
+    // new registration idea
+    <View style={myStyle.layout}>
+      <View style={{ width: "70%", marginTop: 40 }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 40,
+          }}
+        >
+          <Image source={logo} style={myStyle.logo} />
+          <Text style={{ fontWeight: "bold" }}>Only Geng.</Text>
+        </View>
+        <Text
+          style={[
+            Style.label,
+            {
+              fontSize: 24,
+              marginBottom: 10,
+              textAlign: "center",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          Create An Account.
+        </Text>
+        <View>
+          <Text style={Style.label}>Username * :</Text>
+          <TextInput
+            placeholder="Enter  Your Username"
+            style={Style.inputText}
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+          />
+        </View>
+        <View>
+          <Text style={Style.label}>Email Address * :</Text>
+          <TextInput
+            placeholder="Enter Email Address"
+            style={Style.inputText}
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            value={email}
+          />
+        </View>
+        <View>
+          <Text style={Style.label}>Phone Number * :</Text>
+          <TextInput
+            placeholder="<08051985616>"
+            keyboardType="numeric"
+            onChangeText={(text) => setPhone(text)}
+            value={phone}
+            style={Style.inputText}
+          />
+        </View>
+        <View>
+          <Text style={Style.label}>Password * :</Text>
+          <TextInput
+            placeholder="Enter  Your Password"
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={true}
+            value={password}
+            style={Style.inputText}
+          />
+        </View>
+
+        {alert.status && (
+          <Text
+            style={[
+              Style.notification,
+              Style.success,
+              {
+                marginTop: 10,
+                textAlign: "center",
+                color: "#fff",
+              },
+            ]}
+          >
+            {alert.message}
+          </Text>
+        )}
+
+        <TouchableOpacity style={Style.button} onPress={saveUserAccount}>
+          <Text style={{ color: "#fff", fontWeight: "bold" }}>REGISTER</Text>
+        </TouchableOpacity>
+
+        <Text
+          style={{ textAlign: "center", marginTop: 10 }}
+          onPress={() => navigation.navigate("login")}
+        >
+          LOGIN
+        </Text>
+      </View>
+    </View>
+  );
 
   return (
     <View style={Style.layout}>
@@ -105,6 +209,17 @@ const Register = ({ navigation }) => {
   );
 };
 
+const myStyle = StyleSheet.create({
+  layout: {
+    marginTop: 25,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: { width: 80, height: 80, borderRadius: 50 },
+  form: {},
+});
+
 const Style = StyleSheet.create({
   layout: {
     flex: 1,
@@ -122,6 +237,7 @@ const Style = StyleSheet.create({
   label: {
     color: "#000",
     marginBottom: -11,
+    fontWeight: "bold",
   },
   inputText: {
     height: 35,
