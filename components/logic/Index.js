@@ -67,3 +67,5 @@ export const getServiceNetwork = (mobileNumber) => {
 export const mask = (phone) => {
   return phone.slice(0, 7) + "-XXXX";
 };
+
+export const BundleSorting = () => {};

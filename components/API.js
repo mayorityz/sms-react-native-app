@@ -68,3 +68,25 @@ export const balaceAdjustment = async ({ amount, userid }) => {
     return { error: error.message };
   }
 };
+
+// pull data sharing info.
+export const dataSharingFunc = async () => {
+  const externalApi = `https://www.nellobytesystems.com/APIDatabundleV1.asp?UserID=${userid}&APIKey=${apikey}&MobileNetwork=${ntw}&DataPlan=dataplan_size&MobileNumber=${mobile}&RequestID=request_id&CallBackURL=http://www.your-website.com`;
+
+  try {
+    const { data } = await axios.get(externalApi);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+export const bundles = async () => {
+  const EndPoint = "https://www.nellobytesystems.com/APIDatabundlePlansV1.asp";
+  try {
+    const { data } = await axios.get(EndPoint);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+};

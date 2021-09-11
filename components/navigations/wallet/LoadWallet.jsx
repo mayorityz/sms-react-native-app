@@ -21,6 +21,9 @@ const LoadWallett = ({ navigation }) => {
       const details = await AsyncStorage.getItem("userdetails");
       setUserData(JSON.parse(details));
     })();
+    return function cleanup() {
+      console.log("unmount!");
+    };
   }, []);
 
   const success = async (res) => {

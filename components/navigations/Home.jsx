@@ -81,7 +81,10 @@ function HomeScreen({ navigation }) {
               {userDetails.friends ? userDetails.friends.length : "loading"}
             </Text>
           </View>
-          <View style={{ ...navBox.boxes, ...navBox.box1 }}>
+          <View
+            style={{ ...navBox.boxes, ...navBox.box1 }}
+            onStartShouldSetResponder={(e) => navigation.push("data")}
+          >
             <MaterialCommunityIcons
               name="send-outline"
               size={24}

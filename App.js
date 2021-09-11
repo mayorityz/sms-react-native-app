@@ -13,6 +13,13 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+/**
+ * !todo
+ * app loading screen ...
+ * load/fetch friend ...
+ * check that the amount is removed from the wallet... n stop it from changing on the backend as well.
+ */
+
 import gift from "./components/images/gift1.png";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -24,6 +31,7 @@ import AirtimeMany from "./components/navigations/airtime.jsx/AirtimeMany";
 import Login from "./components/screens/Login";
 import Register from "./components/screens/Register";
 import Pay from "./components/screens/Paystack";
+import DataHandler from "./components/navigations/data/Index";
 
 const Stack = createStackNavigator();
 
@@ -53,7 +61,10 @@ export default function App() {
     } catch (e) {
       console.log("app : error :", e.message);
     }
+    setLoading(false);
   };
+
+  if (appLoading) return <ActivityIndicator size="large" color="black" />;
 
   return (
     <NavigationContainer>
@@ -104,6 +115,13 @@ export default function App() {
           component={Pay}
           options={{
             title: "Load Wallet",
+          }}
+        />
+        <Stack.Screen
+          name="data"
+          component={DataHandler}
+          options={{
+            title: "Share Data",
           }}
         />
       </Stack.Navigator>
